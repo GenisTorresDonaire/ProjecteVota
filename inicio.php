@@ -2,46 +2,16 @@
 <html>
 	<head>
 		<title>ProjecteVota</title>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta charset="UTF-8">
 		<link rel="stylesheet" href="css/style.css">
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
 	</head>
 	<body>
-		<nav>
-			<ul>
-				<li>Usuario</li>
-				<li><img src="imagenes/logout.png"></li>
-			</ul>
-		</nav>
-		<div class="contenido">
-			<div class="divForm">
-				<form action="comprobar_login.php" method="post">
-					<table>
-						<tr>
-							<td>Nombre:</td>
-						</tr>
-						<tr>
-							<td><input type="text" name="loginNombre"></td>
-						</tr>
-						<tr>
-							<td><br></td>
-						</tr>
-						<tr>	
-							<td>Password: </td>
-						</tr>
-						<tr>
-							<td><input type="password" name="loginPassword"></td>
-						</tr>
-						<tr>
-							<td><br></td>
-						</tr>
-						<tr>
-							<td colspan="2" style="text-align: center;"><input type="Submit" value="Entrar"></td>
-						</tr>
-					</table>
-				</form>
-			</div>
-		</div>
-		
-
+        <form action="comprobar_login.php" method="post">
+            <h2>Formulario de Login</h2>
+            <input type="text" name="loginNombre" placeholder="&#128272; Usuario">
+            <input type="password" name="loginPassword" placeholder="&#128272; Contraseña">
+            <input type="Submit" value="Entrar">
+        </form>
 	</body>
 </html>
