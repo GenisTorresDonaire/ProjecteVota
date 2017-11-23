@@ -105,8 +105,34 @@ article{
     padding: 10px;
 }
 
-form{
-    
+
+#btn-menu:checked ~ .menuDesplegable{
+    margin: 0;
+}
+
+.menuDesplegable{
+    text-decoration:none;
+    height: auto;
+    width: 180px;
+    position: absolute;
+    top: 69px;
+    left: 1221px;
+}
+
+.menuDesplegable ul{
+    margin: 0;
+    list-style: none;
+    padding: 0;
+}
+
+.menuDesplegable li a{
+    color: black;
+    display: block;
+    text-decoration: none;
+}
+
+.menuDesplegable li a:hover{
+    background: rgba(0,0,0,0.3);
 }
 
 
