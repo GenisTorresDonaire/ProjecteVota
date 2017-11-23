@@ -1,3 +1,12 @@
+<?php
+	session_start();
+    
+    if(!isset($_SESSION['user']) and $_SESSION['estado'] != 'Autenticado'){
+       header('Location: inicio.php');
+       exit();
+    }
+
+?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -11,7 +20,9 @@
         <nav class="contenedorMenu">
         	<div class="menuIcono">
 	            <ul>
-	                <li><a href=""><span class="icon-user-male"></span></a></li>
+	                <li><input type="checkbox" id="btn-menu"></li>	
+               		<li><label for="btn-menu"><span class="icon-user-male"></span></label></li>
+                	<li><label><?php echo "Bienvenido, ".$_SESSION['nombre'] ?></label></li>
 	            </ul>
             </div>
 

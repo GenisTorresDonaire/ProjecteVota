@@ -18,11 +18,6 @@
 	            <input type="password" name="loginPassword" placeholder="&#128272; Contraseña">
 	            <input type="Submit" value="Entrar">
         	</form>
-		</div>
-
-		<article>
-            <h1>Bienvenido</h1>
-        </article>
-        
+		</div>        
 	</body>
 </html>

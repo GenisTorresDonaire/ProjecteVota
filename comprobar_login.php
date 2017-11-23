@@ -15,7 +15,6 @@
 
 	$nombre = $_POST['loginNombre'];
 	$contraseña = $_POST['loginPassword'];
-	$_SESSION['nombre'] = $nombre;
 
 	$query = $pdo->prepare("select * from usuarios where nombre='".$nombre."';");
 	$query->execute();

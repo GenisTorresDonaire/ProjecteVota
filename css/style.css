@@ -105,6 +105,9 @@ article{
     padding: 10px;
 }
 
+#btn-menu{
+    display: none;
+}
 
 #btn-menu:checked ~ .menuDesplegable{
     margin: 0;
