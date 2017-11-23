@@ -16,22 +16,33 @@
 		<link rel="stylesheet" href="css/style.css">
 		<link rel="stylesheet" href="css/fontello.css">
 	</head>
+
 	<body>
-        <nav class="menu">
-        	<ul>
-        		<li><input type="checkbox" id="btn-menu"></li>	
-                <li><label for="btn-menu"><span class="icon-user-male"></span></label></li>
-                <li><label><?php echo "Bienvenido, ".$_SESSION['nombre'] ?></label></li>
-            </ul>
+		<nav class="contenedorMenu">
+        	<div class="menuIcono">
+	            <ul>
+	                <li><input type="checkbox" id="btn-menu"></li>	
+               		<li><label for="btn-menu"><span class="icon-user-male"></span></label></li>
+                	<li><label><?php echo "Bienvenido, ".$_SESSION['nombre'] ?></label></li>
+	            </ul>
+            </div>
+
+            <div class="menuDesplegable"> 
+	            <nav>
+	                <ul>
+	                    <li><a><button onclick="location.href='cerrarsesion.php'">Logout</button></a></li>
+	                </ul> 
+	            </nav>
+        	</div>
+
+            <div class="menuBotones">
+	            <ul>
+					<li><a href="">Inicio</button></a></li>
+					<li><a href="">Consultas</a></li>
+					<li><a href="consultes.php">Crear Consultas</a></li>
+				</ul> 
+            </div>
         </nav>
-        
-        <div class="menuDesplegable"> 
-            <nav>
-                <ul>
-                    <li><a><button onclick="location.href='cerrarsesion.php'">Logout</button></a></li>
-                </ul> 
-            </nav>
-        </div>
 
         <article>
             <h1>Bienvenido</h1>
