@@ -16,7 +16,7 @@ body {
 }
 
 /*  -------------------  MAQUETACION LOGIN  -------------------  */
-form {
+.formInicio form {
     background: #F3F3F3;
     margin: auto;
     width: 50%;
@@ -25,13 +25,13 @@ form {
     border: 1px solid rgba(0,0,0,0.2);
 }
 
-h2 {
+.formInicio h2 {
     text-align: center;
     margin-bottom: 20px;
     color: rgba(0,0,0,0.5)
 }
 
-input {
+.formInicio input {
     display: block;
     padding: 10px;
     width: 100%;
@@ -39,7 +39,7 @@ input {
     font-size: 20px;
 }
 
-input[type="submit"] {
+.formInicio input[type="submit"] {
     background: linear-gradient(#FFDA63, #FFB940);
     border: 0;
     color: brown;
@@ -49,11 +49,11 @@ input[type="submit"] {
     margin-bottom: 0;
 }
 
-input[type="submit"]:hover {
+.formInicio input[type="submit"]:hover {
     opacity: 1;
 }
 
-input[type="submit"]:active {
+.formInicio input[type="submit"]:active {
     transform: scale(0.95)
 }
 
@@ -61,19 +61,41 @@ input[type="submit"]:active {
 
 
 /*  -------------------  PARTE PAGINA  -------------------  */
-nav {
-    background: #F3F3F3;
-    border: 1px solid rgba(0,0,0,0.2);
+.contenedorMenu{
+    display: inline-block;
     width: 100%;
     height: 50px;
+    background: #F3F3F3;
 }
 
-nav li{
+.menuIcono {
+    float: right;
+}
+
+.menuIcono li{
     display: inline-block;
     line-height: 50px;
     float: right;
     margin-right: 40px;
 }
+
+.menuBotones {
+    float: left;
+}
+
+.menuBotones li{
+    display: inline-block;
+    line-height: 50px;
+}
+
+.menuBotones a{
+    text-decoration: none;
+    margin-left: 20px;
+    color: black;
+    font-family: Arial;
+    font-size:18px;
+}
+
 
 article{
     background: rgba(0,0,0,0.2);
@@ -83,6 +105,9 @@ article{
     padding: 10px;
 }
 
+form{
+    
+}
 
 
 /*  -------------------  PARTE RESPONSIVE  -------------------  */

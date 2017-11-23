@@ -7,11 +7,18 @@
 		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
 	</head>
 	<body>
-        <form action="comprobar_login.php" method="post">
-            <h2>Formulario de Login</h2>
-            <input type="text" name="loginNombre" placeholder="&#128272; Usuario">
-            <input type="password" name="loginPassword" placeholder="&#128272; Contraseña">
-            <input type="Submit" value="Entrar">
-        </form>
+		<div class="formInicio">
+			<form action="comprobar_login.php" method="post">
+	            <h2>Formulario de Login</h2>
+	            <input type="text" name="loginNombre" placeholder="&#128272; Usuario">
+	            <input type="password" name="loginPassword" placeholder="&#128272; Contraseña">
+	            <input type="Submit" value="Entrar">
+        	</form>
+		</div>
+
+		<article>
+            <h1>Bienvenido</h1>
+        </article>
+        
 	</body>
 </html>
