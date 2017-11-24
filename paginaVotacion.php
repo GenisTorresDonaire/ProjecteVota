@@ -14,6 +14,7 @@
 		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
 		<link rel="stylesheet" href="css/style.css">
 		<link rel="stylesheet" href="css/fontello.css">
+		<script type="text/javascript" src="js/funciones.js"></script>
 	</head>
 	<body>
         <nav class="contenedorMenu">
@@ -43,9 +44,51 @@
         </nav>
         
         <article>
-        	<h1>Consultas Actuales</h1>
+        	<h1>Consultas</h1>
         	<br>
         	  
+	        <?php
+				try {
+				    $hostname = "localhost";
+				    $dbname = "ProjecteVota";
+				    $username = "root";
+				    $pw = "mysql1234";
+				    $pdo = new PDO ("mysql:host=$hostname;dbname=$dbname","$username","$pw");
+				} catch (PDOException $e) {
+				    echo "Failed to get DB handle: " . $e->getMessage() . "\n";
+				    exit;
+				}
+
+				$id_consulta = $_GET['id_consulta'];
+
+				$query = $pdo->prepare("select pregunta from consulta where id_consulta='".$id_consulta."';");
+				$query->execute();
+				$row = $query->fetch();
+			
+				echo "<div>";
+				while ($row) {
+					echo "<h4>".$row['pregunta']."</h4>";
+					echo "<br>";
+					$row = $query->fetch();
+				}
+
+				$query = $pdo->prepare("select * from opciones where id_consulta='".$id_consulta."';");
+				$query->execute();
+				$row = $query->fetch();
+				
+				echo "<form action='consultes.php' method='post'>";
+				while ($row) {
+					echo "<input type='radio' name='respuesta' value='".$row['id_opciones']."'> ".$row['descripcionOpciones']."</input>";
+					echo "<br>";
+					$row = $query->fetch();
+				}
+				echo "<input type='submit' value='Aplicar'></input>";
+				echo "</form>";
+				echo "</div>";
+
+				unset($pdo); 
+				unset($query);
+			?>
         </article>
 
 	</body>
