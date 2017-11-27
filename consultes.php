@@ -18,28 +18,18 @@
 		    exit;
 		}
 
-		$query = $pdo->prepare("select canVotos from votos where id_opciones='".$_POST['respuesta']."';");
+		$query = $pdo->prepare("select id_usuario from usuarios where nombre='".$_SESSION['nombre']."';");
 		$query->execute();
-		$row = $query->fetch();
-
-		if ($row == null ){
-			$query = $pdo->prepare("insert into votos (id_opciones,canVotos) values('".$_POST['respuesta']."',1);");
+		$row = $query->fetch();		
+	
+		while ($row){
+			$query = $pdo->prepare("insert into votos (id_opciones, id_usuario) values (".$_POST['respuesta'].",".$row['id_usuario'].");");
 			$query->execute();
-			$row = $query->fetch();
+			$row = $query->fetch();	
 		}
-		else{
-			$contadorVotos = $row['canVotos']+1;
-			$query = $pdo->prepare("insert into votos ('id_opciones', 'canVotos') values('".$_POST['respuesta']."','".$contadorVotos."');");
-			$query->execute();
-		}
-		
-
-		//INSERT INTO `votos`(`id_voto`, `id_opciones`, `canVotos`) VALUES ([value-1],[value-2],[value-3])
-		//$query = $pdo->prepare("insert into votos ('id_opciones', 'canVotos') values();");
-		//$query->execute();
     }
-
 ?>
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -100,7 +90,7 @@
 				$contador = 0;
 				while ($row) {
 					$contador = $contador+1;
-					echo "<div>".$contador."- ".$row['pregunta']."<button id='".$row['id_consulta']."' onclick='votarConsulta(".$row['id_consulta'].")'>Vota</button><button id='".$row['id_consulta']."' onclick='editarConsulta(".$row['id_consulta'].")'>Editar</button></div>";
+					echo "<div>".$contador."- ".$row['pregunta']."<button id='".$row['id_consulta']."' onclick='votarConsulta(".$row['id_consulta'].")'>Vota</button><button id='".$row['id_consulta']."' onclick='editarConsulta(".$row['id_consulta'].")'>Editar</button><button id='".$row['id_consulta']."' onclick=''>Invitar</button></div>";
 					echo "<br>";
 
 					$row = $query->fetch();
