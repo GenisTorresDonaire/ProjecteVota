@@ -1,3 +1,12 @@
+function desplegar(id){
+	alert("hola");
+	var elemento = document.getElementById(id).children[0];;
+	elemento.className += "desplegado";
+
+	//document.body.children[1].children[2].children[0];
+	
+}
+
 contCreador = 0;
 contOpciones = 0;
 consultaNull = true;
