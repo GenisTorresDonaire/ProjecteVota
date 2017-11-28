@@ -43,20 +43,11 @@
 	<body>
         <nav class="contenedorMenu">
         	<div class="menuIcono">
-	            <ul>
-	                <li><input type="checkbox" id="btn-menu"></li>	
-               		<li><label for="btn-menu"><span class="icon-user-male"></span></label></li>
+	            <ul>	
+               		<li><label for="btn-menu" onclick="location.href='cerrarsesion.php'"><span class="icon-user-male"></span></label></li>
                 	<li><label><?php echo "Bienvenido, ".$_SESSION['nombre'] ?></label></li>
 	            </ul>
             </div>
-
-            <div class="menuDesplegable"> 
-	            <nav>
-	                <ul>
-	                    <li><a><button onclick="location.href='cerrarsesion.php'">Logout</button></a></li>
-	                </ul> 
-	            </nav>
-        	</div>
 
             <div class="menuBotones">
 	            <ul>
@@ -83,18 +74,35 @@
 				    exit;
 				}
 
-				$query = $pdo->prepare("select * from consulta;");
-				$query->execute();
-				$row = $query->fetch();
+				$query1 = $pdo->prepare("select * from consulta;");
+				$query1->execute();
+				$row1 = $query1->fetch();
 		
 				$contador = 0;
-				while ($row) {
+				echo "<div class='consultas'>";
+				while ($row1) {
 					$contador = $contador+1;
-					echo "<div>".$contador."- ".$row['pregunta']."<button id='".$row['id_consulta']."' onclick='votarConsulta(".$row['id_consulta'].")'>Vota</button><button id='".$row['id_consulta']."' onclick='editarConsulta(".$row['id_consulta'].")'>Editar</button><button id='".$row['id_consulta']."' onclick=''>Invitar</button></div>";
-					echo "<br>";
+					echo "<div id='".$contador."' onclick='desplegar(".$contador.")'>".$contador." - ".$row1['pregunta'];
 
-					$row = $query->fetch();
+						$query2 = $pdo->prepare("select * from opciones where id_consulta='".$row1['id_consulta']."';");
+						$query2->execute();
+						$row2 = $query2->fetch();
+						
+						echo "<div class='plegable'>";
+						echo "<form action='consultes.php' method='post'>";
+						while ($row2) {
+							echo "<input type='radio' name='respuesta' value='".$row2['id_opciones']."'> ".$row2['descripcionOpciones']."</input>";
+							echo "<br>";
+							$row2 = $query2->fetch();
+						}
+						echo "<input type='submit' value='Vota'></input>";
+						echo "</form>";
+						echo "</div>";
+					echo "</div>";
+
+					$row1 = $query1->fetch();
 				}
+				echo "</div>";
 
 				unset($pdo); 
 				unset($query);

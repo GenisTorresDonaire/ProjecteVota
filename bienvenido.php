@@ -21,19 +21,10 @@
 		<nav class="contenedorMenu">
         	<div class="menuIcono">
 	            <ul>
-	                <li><input type="checkbox" id="btn-menu"></li>	
-               		<li><label for="btn-menu"><span class="icon-user-male"></span></label></li>
+               		<li><label for="btn-menu" onclick="location.href='cerrarsesion.php'"><span class="icon-user-male"></span></label></li>
                 	<li><label><?php echo "Bienvenido, ".$_SESSION['nombre'] ?></label></li>
 	            </ul>
             </div>
-
-            <div class="menuDesplegable"> 
-	            <nav>
-	                <ul>
-	                    <li><a><button onclick="location.href='cerrarsesion.php'">Logout</button></a></li>
-	                </ul> 
-	            </nav>
-        	</div>
 
             <div class="menuBotones">
 	            <ul>
