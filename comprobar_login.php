@@ -5,7 +5,7 @@
 	    $hostname = "localhost";
 	    $dbname = "ProjecteVota";
 	    $username = "root";
-	    $pw = "mysql1234";
+	    $pw = "P@ssw0rd";
 	    $pdo = new PDO ("mysql:host=$hostname;dbname=$dbname","$username","$pw");
 	} catch (PDOException $e) {
 	    echo "Failed to get DB handle: " . $e->getMessage() . "\n";
@@ -23,7 +23,7 @@
 		$_SESSION['estado'] = "Autenticado";
 		$autenticado = $_SESSION['estado'];
 		$_SESSION['nombre'] = $nombre;
-		header('Location: consultes.php');
+		header('Location: crearconsultes.php');
 	}else{
 		header('Location: inicio.php');
 	}
