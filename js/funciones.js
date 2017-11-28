@@ -1,10 +1,10 @@
-function desplegar(id){
-	alert("hola");
-	var elemento = document.getElementById(id).children[0];;
-	elemento.className += "desplegado";
-
-	//document.body.children[1].children[2].children[0];
+function desplegar(){
+	var longitud = document.body.children[1].children[2].children.length;
 	
+	for (var x=0; x<longitud; x++){
+		var elemento = document.body.children[1].children[2].children[x].children[0];
+		elemento.className += "desplegado";
+	}
 }
 
 contCreador = 0;
@@ -12,7 +12,6 @@ contOpciones = 0;
 consultaNull = true;
 
 function crearConsulta(){
-
 	contCreador++;
 	if (contCreador == 1){
 
