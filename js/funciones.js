@@ -1,9 +1,17 @@
+
+function desplegar(){
+	var longitud = document.body.children[1].children[2].children.length;
+	
+	for (var x=0; x<longitud; x++){
+		var elemento = document.body.children[1].children[2].children[x].children[0];
+		elemento.className += "desplegado";
+	}
+}
 contCreador = 0;
 contOpciones = 0;
 consultaNull = true;
 
 function crearConsulta(){
-
 	contCreador++;
 	if (contCreador == 1){
 

@@ -40,7 +40,7 @@
 		<link rel="stylesheet" href="css/fontello.css">
 		<script type="text/javascript" src="js/funciones.js"></script>
 	</head>
-	<body>
+	<body onload="setTimeout(desplegar, 2000);">
         <nav class="contenedorMenu">
         	<div class="menuIcono">
 	            <ul>	
