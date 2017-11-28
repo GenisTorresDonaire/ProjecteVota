@@ -6,6 +6,7 @@
        exit();
     }
 
+
     if(isset($_POST['pregunta'])){
     	$pregunta = $_POST['pregunta'];
     	$respuestas = $_POST['input'];

@@ -5,31 +5,7 @@
        header('Location: inicio.php');
        exit();
     }
-
-    if(isset($_POST['respuesta'])){
-    	try {
-		    $hostname = "localhost";
-		    $dbname = "ProjecteVota";
-		    $username = "root";
-		    $pw = "mysql1234";
-		    $pdo = new PDO ("mysql:host=$hostname;dbname=$dbname","$username","$pw");
-		} catch (PDOException $e) {
-		    echo "Failed to get DB handle: " . $e->getMessage() . "\n";
-		    exit;
-		}
-
-		$query = $pdo->prepare("select id_usuario from usuarios where nombre='".$_SESSION['nombre']."';");
-		$query->execute();
-		$row = $query->fetch();		
-	
-		while ($row){
-			$query = $pdo->prepare("insert into votos (id_opciones, id_usuario) values (".$_POST['respuesta'].",".$row['id_usuario'].");");
-			$query->execute();
-			$row = $query->fetch();	
-		}
-    }
 ?>
-
 <!DOCTYPE html>
 <html>
 	<head>
@@ -83,18 +59,32 @@
 				    exit;
 				}
 
-				$query = $pdo->prepare("select * from consulta;");
+				$id_consulta = $_GET['id_consulta'];
+
+				$query = $pdo->prepare("select pregunta from consulta where id_consulta='".$id_consulta."';");
 				$query->execute();
 				$row = $query->fetch();
-		
-				$contador = 0;
+			
+				echo "<div>";
 				while ($row) {
-					$contador = $contador+1;
-					echo "<div>".$contador."- ".$row['pregunta']."<button id='".$row['id_consulta']."' onclick='votarConsulta(".$row['id_consulta'].")'>Vota</button><button id='".$row['id_consulta']."' onclick='editarConsulta(".$row['id_consulta'].")'>Editar</button><button id='".$row['id_consulta']."' onclick=''>Invitar</button></div>";
+					echo "<h4>".$row['pregunta']."</h4>";
 					echo "<br>";
-
 					$row = $query->fetch();
 				}
+
+				$query = $pdo->prepare("select * from opciones where id_consulta='".$id_consulta."';");
+				$query->execute();
+				$row = $query->fetch();
+				
+				echo "<form action='consultes.php' method='post'>";
+				while ($row) {
+					echo "<input type='radio' name='respuesta' value='".$row['id_opciones']."'> ".$row['descripcionOpciones']."</input>";
+					echo "<br>";
+					$row = $query->fetch();
+				}
+				echo "<input type='submit' value='Aplicar'></input>";
+				echo "</form>";
+				echo "</div>";
 
 				unset($pdo); 
 				unset($query);

@@ -38,8 +38,8 @@
             <div class="menuBotones">
 	            <ul>
 					<li><a href="">Inicio</button></a></li>
-					<li><a href="">Consultas</a></li>
-					<li><a href="consultes.php">Crear Consultas</a></li>
+					<li><a href="consultes.php">Consultas</a></li>
+					<li><a href="crearconsultes.php">Crear Consultas</a></li>
 				</ul> 
             </div>
         </nav>
