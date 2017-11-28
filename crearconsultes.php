@@ -14,7 +14,7 @@
 		    $hostname = "localhost";
 		    $dbname = "ProjecteVota";
 		    $username = "root";
-		    $pw = "mysql1234";
+		    $pw = "P@ssw0rd";
 		    $pdo = new PDO ("mysql:host=$hostname;dbname=$dbname","$username","$pw");
 		} catch (PDOException $e) {
 		    echo "Failed to get DB handle: " . $e->getMessage() . "\n";
@@ -33,7 +33,7 @@
 		$row = $query->fetch();
 		
 		foreach ($respuestas as $key) {
-			$query = $pdo->prepare("insert into opciones (descripcion, id_consulta) values('".$key."','".$row['id_consulta']."')");
+			$query = $pdo->prepare("insert into opciones (descripcionOpciones, id_consulta) values('".$key."','".$row['id_consulta']."')");
 			$query->execute();
 		}	
 		
@@ -63,7 +63,7 @@
 
             <div class="menuBotones">
 	            <ul>
-					<li><a href="">Inicio</button></a></li>
+					<li><a href="bienvenido.php">Inicio</button></a></li>
 					<li><a href="consultes.php">Consultas</a></li>
 					<li><a href="crearconsultes.php">Crear Consultas</a></li>
 				</ul> 

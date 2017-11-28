@@ -1,12 +1,3 @@
-function desplegar(id){
-	alert("hola");
-	var elemento = document.getElementById(id).children[0];;
-	elemento.className += "desplegado";
-
-	//document.body.children[1].children[2].children[0];
-	
-}
-
 contCreador = 0;
 contOpciones = 0;
 consultaNull = true;
@@ -32,8 +23,13 @@ function crearConsulta(){
 	    data_obertura.appendChild(text);
 	    document.getElementById("myForm").appendChild(data_obertura);
 
+	   	
 	    var input = document.createElement("input");
-	    input.setAttribute("type", "text");
+	    input.setAttribute("id", "inicio");
+	    input.setAttribute("onblur", "validarFocus(event)");
+	    input.setAttribute("placeholder", "DD-MM-YYYY");
+	    input.setAttribute("min", ""+hoy()+"")
+	    input.setAttribute("type", "date");
 	    input.setAttribute("value", "");
 	    document.getElementById("myForm").appendChild(input);
 
@@ -43,7 +39,11 @@ function crearConsulta(){
 	    document.getElementById("myForm").appendChild(data_tancament);
 
 	    var input = document.createElement("input");
-	    input.setAttribute("type", "text");
+	    input.setAttribute("id", "final");
+	    input.setAttribute("type", "date");
+	    input.setAttribute("onblur", "validarFocus(event)");
+	    input.setAttribute("placeholder", "DD-MM-YYYY");
+	    input.setAttribute("min", ""+cogerDiaPosterior()+"")
 	    input.setAttribute("value", "");
 	    document.getElementById("myForm").appendChild(input);
 
@@ -87,6 +87,7 @@ function crearRespuestas(){
     var input = document.createElement("input");
     input.setAttribute("type", "text");
     input.setAttribute("value", "");
+    input.setAttribute("onblur", "validarFocus(event)");
     input.setAttribute('class','opciones');
     input.setAttribute("id", "i"+contOpciones);
     input.setAttribute("name","input[]")
@@ -147,6 +148,8 @@ function validarRespuestas(){
 
 	var opciones_no_null = 0;
 	var inputs = document.getElementsByClassName('opciones');
+
+	comprobarfechar();
 	
 	for(var numero=0; numero<inputs.length;numero++){
 		if(inputs[numero].value != ""){
@@ -174,10 +177,74 @@ function validarFocus(event){
 
 	var focus = event.currentTarget;
 
-	if(focus.value.lenght == 0){
-		focus.style.boxShadow = "3px 3px red";
+	if(focus.value.length == 0){
+		focus.setAttribute("style", "border-color:red;"); 
 	}
 	else{
-		focus.style.boxShadow = "none";
+		focus.setAttribute("style","border-color:none;");
+	}
+}
+
+function hoy(){
+
+	var hoy = new Date();
+	var dd = hoy.getDate();
+	var mm = hoy.getMonth()+1;
+	var yyyy= hoy.getFullYear();
+
+	if (dd<10) {
+		dd = '0'+dd;
+	}
+
+	if(mm<10){
+		mm = '0'+mm;
+	}
+
+	hoy = mm+'-'+dd+'-'+yyyy;
+
+}
+
+function cogerDiaPosterior(){
+	var hoy = new Date();
+
+	var dd = hoy.getDate()+1;
+	var mm = hoy.getMonth()+1;
+	var yyyy= hoy.getFullYear();
+
+	if (dd<10) {
+		dd = '0'+dd;
+	}
+
+	if(mm<10){
+		mm = '0'+mm;
+	}
+
+	hoy = mm+'-'+dd+'-'+yyyy;
+}
+
+function comprobarfechar(){
+	var diaEntrada = document.getElementById("inicio").value;
+	var diaTancament =  document.getElementById("final").value;
+
+	var hoy = new Date();
+	var dd = hoy.getDate();
+	var mm = hoy.getMonth()+1;
+	var yyyy= hoy.getFullYear();
+
+	if (dd<10) {
+		dd = '0'+dd;
+	}
+
+	if(mm<10){
+		mm = '0'+mm;
+	}
+
+	hoy = mm+'-'+dd+'-'+yyyy;
+
+	if (diaEntrada > diaTancament){
+		alert("La fecha de inicio tiene que ser mas pequeña que la del tancament!!");
+	}
+	else if (diaEntrada == hoy){
+		alert("La fecha de inicio no puede ser la actual!!");
 	}
 }
