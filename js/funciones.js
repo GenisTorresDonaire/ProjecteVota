@@ -32,6 +32,7 @@ function crearConsulta(){
 	    // CREACION DE LA FECHA DE OBERTURA
 	    data_obertura.appendChild(text);
 	    document.getElementById("myForm").appendChild(data_obertura);
+
 	   	// INPUT
 	    var input = document.createElement("input");
 	    input.setAttribute("id", "inicio");
@@ -78,7 +79,10 @@ function crearConsulta(){
 
 	    var salto = document.createElement("br");
 	    document.getElementById("myForm").appendChild(salto);
-	  
+
+	    var salto = document.createElement("br");
+	    document.getElementById("myForm").appendChild(salto);
+
 	    padre.insertBefore(form,padre);
 	}
 }
@@ -90,6 +94,7 @@ function crearRespuestas(){
     var text = document.createTextNode("Opcion "+contOpciones+": ");
     opcion.appendChild(text);
     opcion.setAttribute("id", "o"+contOpciones);
+    opcion.setAttribute("class", "labels");
     document.getElementById("myForm").appendChild(opcion);
 
     var input = document.createElement("input");
@@ -109,42 +114,32 @@ function crearRespuestas(){
     boton.setAttribute("onclick", 'eliminar('+contOpciones+')');
     document.getElementById("myForm").appendChild(boton);
 
+	var br = document.createElement("br");
+	br.setAttribute("id", contOpciones);
+	document.getElementById("myForm").appendChild(br);
+
     padre.insertBefore(form,padre);
 }
 
 function eliminar(id){
+	var nuevoNumero = 1;
 	contOpciones--;
 
 	var contLabel = 1;
 	var blabel = document.getElementById("b"+id);
 	var ilabel = document.getElementById("i"+id);
 	var olabel = document.getElementById("o"+id);
+	var br = document.getElementById(id);
 	blabel.parentNode.removeChild(blabel);
 	ilabel.parentNode.removeChild(ilabel);
 	olabel.parentNode.removeChild(olabel);
-	resetearDespuesBorrado();
-}
+	br.parentNode.removeChild(br);
 
-function resetearDespuesBorrado(){
-	alert("contOpciones: " + contOpciones);
-	/*
-	//var padre = document.body.childNodes[3];
-	var padre = document.body.children[1].children[4].children[7];
-	for (var x=7; x <= (7+contOpciones);x++){
-		alert(x);
-	}
-	*/
-	for ( var y= 1; y <= contOpciones; y++){
-		var elemento = document.body.children[1].children[4].children.o+y;
-		elemento.innerHTML= "opcioN"+y;
-	}
+	var opciones = document.getElementsByClassName('labels');
 
-	contOpciones++;
-	var label = document.getElementsByClassName("opciones");
-	for(var numero=0; numero<label.length;numero++){
-		label[numero].innerHTML = "Opcion" + contLabel + ": "
-		contLabel++;
-
+	for(var num = 0; num < opciones.length; num++){
+		opciones[num].innerHTML = "Opcion " + nuevoNumero + ": ";
+		nuevoNumero++;
 	}
 }
 
