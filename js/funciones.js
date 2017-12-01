@@ -43,6 +43,7 @@ function crearConsulta(){
 
 	    var data_tancament = document.createElement("label");
 	    var text = document.createTextNode("Data de tancament: ");
+
 	    data_tancament.appendChild(text);
 	    document.getElementById("myForm").appendChild(data_tancament);
 
@@ -117,12 +118,24 @@ function crearRespuestas(){
 
 function eliminar(id){
 
+	var contLabel = 1;
+
 	var blabel = document.getElementById("b"+id);
 	var ilabel = document.getElementById("i"+id);
 	var olabel = document.getElementById("o"+id);
 	blabel.parentNode.removeChild(blabel);
 	ilabel.parentNode.removeChild(ilabel);
 	olabel.parentNode.removeChild(olabel);
+
+	contOpciones++;
+
+	var label = document.getElementsByClassName("opciones");
+
+	for(var numero=0; numero<label.length;numero++){
+		label[numero].innerHTML = "Opcion" + contLabel + ": "
+		contLabel++;
+
+	}
 
 }
 
@@ -157,7 +170,7 @@ function validarRespuestas(){
 	var opciones_no_null = 0;
 	var inputs = document.getElementsByClassName('opciones');
 
-	comprobarfechar();
+	comprobarfechas();
 	
 	for(var numero=0; numero<inputs.length;numero++){
 		if(inputs[numero].value != ""){
@@ -198,7 +211,7 @@ function hoy(){
 	var hoy = new Date();
 	var dd = hoy.getDate();
 	var mm = hoy.getMonth()+1;
-	var yyyy= hoy.getFullYear();
+	var yyyy = hoy.getFullYear();
 
 	if (dd<10) {
 		dd = '0'+dd;
@@ -230,29 +243,33 @@ function cogerDiaPosterior(){
 	hoy = mm+'-'+dd+'-'+yyyy;
 }
 
-function comprobarfechar(){
+function comprobarfechas(){
 	var diaEntrada = document.getElementById("inicio").value;
 	var diaTancament =  document.getElementById("final").value;
 
 	var hoy = new Date();
+
 	var dd = hoy.getDate();
 	var mm = hoy.getMonth()+1;
 	var yyyy= hoy.getFullYear();
 
-	if (dd<10) {
-		dd = '0'+dd;
+	diaEntrada = diaEntrada.split("-")
+	diaTancament = diaTancament.split("-")
+
+	if(diaEntrada[2] < dd || diaEntrada[1] < mm || diaEntrada[0] < yyyy){
+		alert("La fecha de inicio no puede ser mas pequena que la data actual!!");
 	}
 
-	if(mm<10){
-		mm = '0'+mm;
-	}
-
-	hoy = mm+'-'+dd+'-'+yyyy;
-
-	if (diaEntrada > diaTancament){
+	else if (diaEntrada[2] < diaTancament[2] && diaTancament[1] < diaEntrada[1] && diaTancament[0] < diaEntrada[0]){
 		alert("La fecha de inicio tiene que ser mas pequeña que la del tancament!!");
 	}
-	else if (diaEntrada == hoy){
+
+	else if (diaEntrada[2] == dd && diaEntrada[1] == mm && diaEntrada[0] == yyyy){
 		alert("La fecha de inicio no puede ser la actual!!");
+	}
+
+	else if ((diaTancament[2] == diaEntrada[2] && diaTancament[1] == diaEntrada[1] && diaTancament[0] == diaEntrada[0]) ||
+			((diaTancament[0] < diaEntrada[0]) || (diaTancament[1] < diaEntrada[1])) || (diaTancament[2] < diaEntrada[2])){
+		alert("La fecha de tancament tiene que ser mas grande que la del inicio!!");
 	}
 }
