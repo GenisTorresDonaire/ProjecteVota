@@ -1,4 +1,3 @@
-
 function desplegar(){
 	var longitud = document.body.children[1].children[2].children.length;
 	
@@ -7,14 +6,16 @@ function desplegar(){
 		elemento.className += "desplegado";
 	}
 }
+
 contCreador = 0;
+arrayOpciones = 0;
 contOpciones = 0;
 consultaNull = true;
 
 function crearConsulta(){
+	arrayOpciones = 0;
 	contCreador++;
 	if (contCreador == 1){
-
 		var padre = document.body.childNodes[3];
 
 		/*Creacio del form*/
@@ -24,14 +25,14 @@ function crearConsulta(){
 	    form.setAttribute("method", "post");
 	    padre.appendChild(form);
 
-	    /*Creacio del label amb el seu text*/
+	    // CREACION DE LA LABEL CON SU TEXTO
 	    var data_obertura = document.createElement("label");
 	    var text = document.createTextNode("Data de obertura: ");
 
+	    // CREACION DE LA FECHA DE OBERTURA
 	    data_obertura.appendChild(text);
 	    document.getElementById("myForm").appendChild(data_obertura);
-
-	   	
+	   	// INPUT
 	    var input = document.createElement("input");
 	    input.setAttribute("id", "inicio");
 	    input.setAttribute("onblur", "validarFocus(event)");
@@ -40,12 +41,13 @@ function crearConsulta(){
 	    input.setAttribute("type", "date");
 	    input.setAttribute("value", "");
 	    document.getElementById("myForm").appendChild(input);
-
+	    // LABEL
 	    var data_tancament = document.createElement("label");
 	    var text = document.createTextNode("Data de tancament: ");
 	    data_tancament.appendChild(text);
 	    document.getElementById("myForm").appendChild(data_tancament);
 
+	    // INPUT 
 	    var input = document.createElement("input");
 	    input.setAttribute("id", "final");
 	    input.setAttribute("type", "date");
@@ -83,9 +85,6 @@ function crearConsulta(){
 function crearRespuestas(){
 	contOpciones++;
 
-	var salto = document.createElement("br");
-	document.getElementById("myForm").appendChild(salto);
-
 	var opcion = document.createElement("label");
     var text = document.createTextNode("Opcion "+contOpciones+": ");
     opcion.appendChild(text);
@@ -109,21 +108,34 @@ function crearRespuestas(){
     boton.setAttribute("onclick", 'eliminar('+contOpciones+')');
     document.getElementById("myForm").appendChild(boton);
 
-	var salto = document.createElement("br");
-	document.getElementById("myForm").appendChild(salto);
-
     padre.insertBefore(form,padre);
 }
 
 function eliminar(id){
-
+	contOpciones--;
 	var blabel = document.getElementById("b"+id);
 	var ilabel = document.getElementById("i"+id);
 	var olabel = document.getElementById("o"+id);
 	blabel.parentNode.removeChild(blabel);
 	ilabel.parentNode.removeChild(ilabel);
 	olabel.parentNode.removeChild(olabel);
+	resetearDespuesBorrado();
+}
 
+function resetearDespuesBorrado(){
+	alert("contOpciones: " + contOpciones);
+	/*
+	//var padre = document.body.childNodes[3];
+	var padre = document.body.children[1].children[4].children[7];
+	for (var x=7; x <= (7+contOpciones);x++){
+		alert(x);
+	}
+	*/
+	for ( var y= 1; y <= contOpciones; y++){
+		var elemento = document.body.children[1].children[4].children.o+y;
+		elemento.innerHTML= "opcioN"+y;
+	}
+	
 }
 
 
@@ -138,14 +150,12 @@ function validarTextos(){
 	var buit = document.getElementById('pre');
 	
 	if(buit.value != ""){
-
 		consultaNull = false;
 		var rojo = document.getElementById("pre");
 		rojo.setAttribute("style","border-color:none;");
 		crearRespuestas();
 	}
 	else{
-		
 		consultaNull = true;
 		var rojo = document.getElementById("pre");
 		rojo.setAttribute("style","border-color:red;");

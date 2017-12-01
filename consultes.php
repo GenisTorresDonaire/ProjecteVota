@@ -1,7 +1,7 @@
 <?php
 	session_start();
     
-    if(!isset($_SESSION['user']) and $_SESSION['estado'] != 'Autenticado'){
+    if(!isset($_SESSION['nombre']) and $_SESSION['estado'] != 'Autenticado'){
        header('Location: inicio.php');
        exit();
     }
@@ -11,14 +11,14 @@
 		    $hostname = "localhost";
 		    $dbname = "ProjecteVota";
 		    $username = "root";
-		    $pw = "P@ssw0rd";
+		    $pw = "mysql1234";
 		    $pdo = new PDO ("mysql:host=$hostname;dbname=$dbname","$username","$pw");
 		} catch (PDOException $e) {
 		    echo "Failed to get DB handle: " . $e->getMessage() . "\n";
 		    exit;
 		}
 
-		$query = $pdo->prepare("select id_usuario from usuarios where nombre='".$_SESSION['nombre']."';");
+		$query = $pdo->prepare("select id_usuario from usuarios where nombre='".$_POST['loginNombre']."';");
 		$query->execute();
 		$row = $query->fetch();		
 	
@@ -67,7 +67,7 @@
 				    $hostname = "localhost";
 				    $dbname = "ProjecteVota";
 				    $username = "root";
-				    $pw = "P@ssw0rd";
+				    $pw = "mysql1234";
 				    $pdo = new PDO ("mysql:host=$hostname;dbname=$dbname","$username","$pw");
 				} catch (PDOException $e) {
 				    echo "Failed to get DB handle: " . $e->getMessage() . "\n";

@@ -1,7 +1,7 @@
 <?php
 	session_start();
     
-    if(!isset($_SESSION['user']) and $_SESSION['estado'] != 'Autenticado'){
+    if(!isset($_SESSION['nombre']) and $_SESSION['estado'] != 'Autenticado'){
        header('Location: inicio.php');
        exit();
     }
