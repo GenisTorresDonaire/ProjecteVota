@@ -41,10 +41,14 @@
 		<script type="text/javascript" src="js/funciones.js"></script>
 	</head>
 	<body onload="setTimeout(desplegar, 2000);">
+		<header>
+            <img src="imagenes/banner.png"/>
+        </header>
+        
         <nav class="contenedorMenu">
         	<div class="menuIcono">
 	            <ul>	
-               		<li><label for="btn-menu" onclick="location.href='cerrarsesion.php'"><span class="icon-user-male"></span></label></li>
+               		<li><label for="btn-menu" onclick="location.href='cerrarsesion.php'"><span class="icon-off"></span></label></li>
                 	<li><label><?php echo "Bienvenido, ".$_SESSION['nombre'] ?></label></li>
 	            </ul>
             </div>

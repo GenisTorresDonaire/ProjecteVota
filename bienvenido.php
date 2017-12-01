@@ -18,10 +18,14 @@
 	</head>
 
 	<body>
+		<header>
+            <img src="imagenes/banner.png"/>
+        </header>
+        
 		<nav class="contenedorMenu">
         	<div class="menuIcono">
 	            <ul>
-               		<li><label for="btn-menu" onclick="location.href='cerrarsesion.php'"><span class="icon-user-male"></span></label></li>
+               		<li><label for="btn-menu" onclick="location.href='cerrarsesion.php'"><span class="icon-off"></span></label></li>
                 	<li><label><?php echo "Bienvenido, ".$_SESSION['nombre'] ?></label></li>
 	            </ul>
             </div>
