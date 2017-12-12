@@ -21,7 +21,16 @@
 
 		$_SESSION['estado'] = "Autenticado";
 		$_SESSION['nombre'] = $_POST['loginNombre'];
-		header('Location: crearconsultes.php');
+		$_SESSION['esadmin'] = $row['Admin'];
+
+		if( $_SESSION['esadmin'] == '0' ){
+			$_SESSION['rol'] = 'Cliente';
+			header('Location: consultes.php');
+		}
+		else if( $_SESSION['esadmin'] == '1' ){
+			$_SESSION['rol'] = 'Administrador';
+			header('Location: bienvenido.php');
+		}
 	}else{
 		header('Location: inicio.php');
 	}

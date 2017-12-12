@@ -5,29 +5,6 @@
        header('Location: inicio.php');
        exit();
     }
-
-    if(isset($_POST['respuesta'])){
-    	try {
-		    $hostname = "localhost";
-		    $dbname = "ProjecteVota";
-		    $username = "root";
-		    $pw = "P@ssw0rd";
-		    $pdo = new PDO ("mysql:host=$hostname;dbname=$dbname","$username","$pw");
-		} catch (PDOException $e) {
-		    echo "Failed to get DB handle: " . $e->getMessage() . "\n";
-		    exit;
-		}
-
-		$query = $pdo->prepare("select id_usuario from usuarios where nombre='".$_POST['loginNombre']."';");
-		$query->execute();
-		$row = $query->fetch();		
-	
-		while ($row){
-			$query = $pdo->prepare("insert into votos (id_opciones, id_usuario) values (".$_POST['respuesta'].",".$row['id_usuario'].");");
-			$query->execute();
-			$row = $query->fetch();	
-		}
-    }
 ?>
 
 <!DOCTYPE html>
@@ -70,7 +47,7 @@
         </nav>
         
         <article>
-        	<h1>Consultas</h1>
+        	<h1>Invitaciones</h1>
         	<br>
         	  
 	        <?php
@@ -78,43 +55,30 @@
 				    $hostname = "localhost";
 				    $dbname = "ProjecteVota";
 				    $username = "root";
-				    $pw = "P@ssw0rd";
+				    $pw = "mysql1234";
 				    $pdo = new PDO ("mysql:host=$hostname;dbname=$dbname","$username","$pw");
 				} catch (PDOException $e) {
 				    echo "Failed to get DB handle: " . $e->getMessage() . "\n";
 				    exit;
 				}
 
-				$query1 = $pdo->prepare("select * from consulta;");
-				$query1->execute();
-				$row1 = $query1->fetch();
-		
-				$contador = 0;
-				echo "<div class='consultas'>";
-				while ($row1) {
-					$contador = $contador+1;
-					echo "<div id='".$contador."' onclick='desplegar(".$contador.")'>".$contador." - ".$row1['pregunta'];
+				echo "<form action='email.php' method='post'>";
+					echo "<p>Correo Invitado: </p>";
+					echo "<textarea class='textareaInvitar' name='correo' placeholder='Introducir un correo por linea' requiered></textarea>";
+					$query = $pdo->prepare("select * from consulta;");
+					$query->execute();
+					$row = $query->fetch();
+					
+					echo "<p>Consulta: ";
+					echo "<select name='consulta'>";
+					while ($row) {
+						echo "<option value='".$row['id_consulta']."'>".$row['pregunta']."</option>";
+						$row = $query->fetch();
+					}
+					echo "</select></p>";
 
-						$query2 = $pdo->prepare("select * from opciones where id_consulta='".$row1['id_consulta']."';");
-						$query2->execute();
-						$row2 = $query2->fetch();
-						
-						echo "<div class='plegable'>";
-						echo "<form action='consultes.php' method='post'>";
-						while ($row2) {
-							echo "<input type='radio' name='respuesta' value='".$row2['id_opciones']."'> ".$row2['descripcionOpciones']."</input>";
-							echo "<br>";
-							$row2 = $query2->fetch();
-						}
-						echo "<input type='submit' value='Vota'></input>";
-						
-						echo "</form>";
-						echo "</div>";
-					echo "</div>";
-
-					$row1 = $query1->fetch();
-				}
-				echo "</div>";
+					echo "<input type='submit' value='Invitar'>";
+				echo "</form>";
 
 				unset($pdo); 
 				unset($query);
