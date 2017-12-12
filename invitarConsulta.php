@@ -5,43 +5,8 @@
        header('Location: inicio.php');
        exit();
     }
-
-    if(isset($_POST['pregunta'])){
-    	$pregunta = $_POST['pregunta'];
-    	$respuestas = $_POST['input'];
-
-		try {
-		    $hostname = "localhost";
-		    $dbname = "ProjecteVota";
-		    $username = "root";
-		    $pw = "mysql1234";
-		    $pdo = new PDO ("mysql:host=$hostname;dbname=$dbname","$username","$pw");
-		} catch (PDOException $e) {
-		    echo "Failed to get DB handle: " . $e->getMessage() . "\n";
-		    exit;
-		}
-
-		$query = $pdo->prepare("select id_usuario from usuarios where nombre='".$_SESSION['nombre']."'");
-		$query->execute();
-		$row = $query->fetch();
-
-		$query = $pdo->prepare("insert into consulta (pregunta, id_usuario) values ('".$pregunta."','".$row['id_usuario']."')");
-		$query->execute();
-
-		$query = $pdo->prepare("select id_consulta from consulta where pregunta='".$pregunta."'");
-		$query->execute();
-		$row = $query->fetch();
-		
-		foreach ($respuestas as $key) {
-			$query = $pdo->prepare("insert into opciones (descripcionOpciones, id_consulta) values('".$key."','".$row['id_consulta']."')");
-			$query->execute();
-		}	
-		
-		unset($pdo); 
-		unset($query);
-    }
-
 ?>
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -52,14 +17,14 @@
 		<link rel="stylesheet" href="css/fontello.css">
 		<script type="text/javascript" src="js/funciones.js"></script>
 	</head>
-	<body>
+	<body onload="setTimeout(desplegar, 2000);">
 		<header>
             <img src="imagenes/banner.png"/>
         </header>
-
+        
         <nav class="contenedorMenu">
         	<div class="menuIcono">
-	            <ul>
+	            <ul>	
                		<li><label for="btn-menu" onclick="location.href='cerrarsesion.php'"><span class="icon-off"></span></label></li>
                 	<li><label><?php echo "Bienvenido ".$_SESSION['rol'].", ".$_SESSION['nombre'] ?></label></li>
 	            </ul>
@@ -82,16 +47,43 @@
         </nav>
         
         <article>
-        	<h1>Crear consultas</h1>
-
-        	<input type="submit" name="submit" value="Crear consulta" onclick="crearConsulta()"></input>
-
-        	<input type="submit" name="submit" value="Crear respuestas" onclick="validarTextos()" ></input>
-
-        	<input type="submit" name="submit" value="Enviar" onclick="validarRespuestas()"></input>
+        	<h1>Invitaciones</h1>
+        	<br>
         	  
-        </article>
+	        <?php
+				try {
+				    $hostname = "localhost";
+				    $dbname = "ProjecteVota";
+				    $username = "root";
+				    $pw = "mysql1234";
+				    $pdo = new PDO ("mysql:host=$hostname;dbname=$dbname","$username","$pw");
+				} catch (PDOException $e) {
+				    echo "Failed to get DB handle: " . $e->getMessage() . "\n";
+				    exit;
+				}
 
+				echo "<form action='email.php' method='post'>";
+					echo "<p>Correo Invitado: </p>";
+					echo "<textarea class='textareaInvitar' name='correo' placeholder='Introducir un correo por linea' requiered></textarea>";
+					$query = $pdo->prepare("select * from consulta;");
+					$query->execute();
+					$row = $query->fetch();
+					
+					echo "<p>Consulta: ";
+					echo "<select name='consulta'>";
+					while ($row) {
+						echo "<option value='".$row['id_consulta']."'>".$row['pregunta']."</option>";
+						$row = $query->fetch();
+					}
+					echo "</select></p>";
+
+					echo "<input type='submit' value='Invitar'>";
+				echo "</form>";
+
+				unset($pdo); 
+				unset($query);
+			?>
+        </article>
 
 	</body>
 </html>
