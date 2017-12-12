@@ -1,3 +1,8 @@
+contCreador = 0;
+arrayOpciones = 0;
+contOpciones = 0;
+consultaNull = true;
+
 function desplegar(){
 	var longitud = document.body.children[2].children[2].children.length;
 	
@@ -6,11 +11,6 @@ function desplegar(){
 		elemento.className += "desplegado";
 	}
 }
-
-contCreador = 0;
-arrayOpciones = 0;
-contOpciones = 0;
-consultaNull = true;
 
 function crearConsulta(){
 	arrayOpciones = 0;
@@ -37,7 +37,6 @@ function crearConsulta(){
 	    var input = document.createElement("input");
 	    input.setAttribute("id", "inicio");
 	    input.setAttribute("onblur", "validarFocus(event)");
-	    input.setAttribute("placeholder", "DD-MM-YYYY");
 	    input.setAttribute("min", ""+hoy()+"")
 	    input.setAttribute("type", "date");
 	    input.setAttribute("value", "");
@@ -54,7 +53,6 @@ function crearConsulta(){
 	    input.setAttribute("id", "final");
 	    input.setAttribute("type", "date");
 	    input.setAttribute("onblur", "validarFocus(event)");
-	    input.setAttribute("placeholder", "DD-MM-YYYY");
 	    input.setAttribute("min", ""+cogerDiaPosterior()+"")
 	    input.setAttribute("value", "");
 	    document.getElementById("myForm").appendChild(input);
@@ -111,11 +109,31 @@ function crearRespuestas(){
     boton.appendChild(text);
     boton.setAttribute("type", "button");
     boton.setAttribute("id", "b"+contOpciones);
+    boton.setAttribute("class", "botones");
     boton.setAttribute("onclick", 'eliminar('+contOpciones+')');
     document.getElementById("myForm").appendChild(boton);
 
+    var arriba = document.createElement("button");
+    var text = document.createTextNode("⬆");
+    arriba.appendChild(text);
+    arriba.setAttribute("type", "button");
+    arriba.setAttribute("id", "flechA"+contOpciones);
+    arriba.setAttribute("class", "arriba");
+    arriba.setAttribute("onclick", 'subirRespuesta('+contOpciones+')');
+    document.getElementById("myForm").appendChild(arriba);
+
+    var bajar = document.createElement("button");
+    var text = document.createTextNode("⬇");
+    bajar.appendChild(text);
+    bajar.setAttribute("type", "button");
+    bajar.setAttribute("id", "flechB"+contOpciones);
+    bajar.setAttribute("class", "abajo");
+    bajar.setAttribute("onclick", 'bajarRespuesta('+contOpciones+')');
+    document.getElementById("myForm").appendChild(bajar);
+
 	var br = document.createElement("br");
 	br.setAttribute("id", contOpciones);
+	br.setAttribute("class", "contbr");
 	document.getElementById("myForm").appendChild(br);
 
     padre.insertBefore(form,padre);
@@ -130,10 +148,14 @@ function eliminar(id){
 	var ilabel = document.getElementById("i"+id);
 	var olabel = document.getElementById("o"+id);
 	var br = document.getElementById(id);
+	var flechArriba = document.getElementById("flechA"+id);
+	var flechAbajo = document.getElementById("flechB"+id);
 	blabel.parentNode.removeChild(blabel);
 	ilabel.parentNode.removeChild(ilabel);
 	olabel.parentNode.removeChild(olabel);
 	br.parentNode.removeChild(br);
+	flechArriba.parentNode.removeChild(flechArriba);
+	flechAbajo.parentNode.removeChild(flechAbajo);
 
 	var opciones = document.getElementsByClassName('labels');
 
@@ -141,6 +163,68 @@ function eliminar(id){
 		opciones[num].innerHTML = "Opcion " + nuevoNumero + ": ";
 		nuevoNumero++;
 	}
+}
+
+function eliminarRespuestas(){
+
+	var nuevoNumero = 1;
+	contOpciones--;
+
+	var contLabel = 1;
+	var borrarLabel = document.getElementsByClassName('labels');
+	var borrarOpciones = document.getElementsByClassName('opciones');
+	var borrarBr = document.getElementsByClassName('contbr');
+	var borrarBotones = document.getElementsByClassName('botones');
+	var borrarArriba = document.getElementsByClassName('arriba');
+	var borrarAbajo = document.getElementsByClassName('abajo');
+
+	for(var num = 0; num <= contOpciones; num++){
+		borrarLabel[0].parentNode.removeChild(borrarLabel[0]);
+		borrarOpciones[0].parentNode.removeChild(borrarOpciones[0]);
+		borrarBr[0].parentNode.removeChild(borrarBr[0]);
+		borrarBotones[0].parentNode.removeChild(borrarBotones[0]);
+		borrarArriba[0].parentNode.removeChild(borrarArriba[0]);
+		borrarAbajo[0].parentNode.removeChild(borrarAbajo[0]);
+	}
+
+	contOpciones = 0;
+
+}
+
+function subirRespuesta(id){
+
+	var inputNuevo = id - 1;
+
+	var input = document.getElementById('i'+id);
+	var inputDos = document.getElementById('i'+inputNuevo);
+
+	if(inputDos != null){
+	
+		var valor = input.value;
+		var valorDos = inputDos.value;
+
+		input.value = valorDos;
+		inputDos.value = valor;
+	}
+
+}
+
+function bajarRespuesta(id){
+
+	var inputNuevo = id + 1;
+
+	var input = document.getElementById('i'+id);
+	var inputDos = document.getElementById('i'+inputNuevo);
+
+	if(inputDos != null){
+	
+		var valor = input.value;
+		var valorDos = inputDos.value;
+
+		input.value = valorDos;
+		inputDos.value = valor;
+	}
+
 }
 
 
@@ -197,12 +281,12 @@ function validarRespuestas(){
 }
 
 function validarFocus(event){
-
 	var focus = event.currentTarget;
-
 	if(focus.value.length == 0){
-		focus.setAttribute("style", "border-color:red;"); 
+
+		focus.setAttribute("style", "border-color:red;");
 	}
+
 	else{
 		focus.setAttribute("style","border-color:none;");
 	}
@@ -214,6 +298,7 @@ function hoy(){
 	var dd = hoy.getDate();
 	var mm = hoy.getMonth()+1;
 	var yyyy = hoy.getFullYear();
+	var hh = hoy.getHours();
 
 	if (dd<10) {
 		dd = '0'+dd;
@@ -223,7 +308,7 @@ function hoy(){
 		mm = '0'+mm;
 	}
 
-	hoy = mm+'-'+dd+'-'+yyyy;
+	hoy = mm+'-'+dd+'-'+yyyy+'-'+hh;
 
 }
 
@@ -232,7 +317,8 @@ function cogerDiaPosterior(){
 
 	var dd = hoy.getDate()+1;
 	var mm = hoy.getMonth()+1;
-	var yyyy= hoy.getFullYear();
+	var yyyy = hoy.getFullYear();
+	var hh = hoy.getHours();
 
 	if (dd<10) {
 		dd = '0'+dd;
@@ -242,7 +328,7 @@ function cogerDiaPosterior(){
 		mm = '0'+mm;
 	}
 
-	hoy = mm+'-'+dd+'-'+yyyy;
+	hoy = mm+'-'+dd+'-'+yyyy+'-'+hh;
 }
 
 function comprobarfechas(){
@@ -250,10 +336,11 @@ function comprobarfechas(){
 	var diaTancament =  document.getElementById("final").value;
 
 	var hoy = new Date();
-
+	
 	var dd = hoy.getDate();
 	var mm = hoy.getMonth()+1;
-	var yyyy= hoy.getFullYear();
+	var yyyy = hoy.getFullYear();
+	var hh = hoy.getHours();
 
 	diaEntrada = diaEntrada.split("-")
 	diaTancament = diaTancament.split("-")
