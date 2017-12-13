@@ -14,7 +14,7 @@
 		    $hostname = "localhost";
 		    $dbname = "ProjecteVota";
 		    $username = "root";
-		    $pw = "mysql1234";
+		    $pw = "P@ssw0rd";
 		    $pdo = new PDO ("mysql:host=$hostname;dbname=$dbname","$username","$pw");
 		} catch (PDOException $e) {
 		    echo "Failed to get DB handle: " . $e->getMessage() . "\n";
@@ -87,6 +87,8 @@
         	<input type="submit" name="submit" value="Crear consulta" onclick="crearConsulta()"></input>
 
         	<input type="submit" name="submit" value="Crear respuestas" onclick="validarTextos()" ></input>
+
+        	<input type="submit" name="submit" value="Eliminar Respuestas" onclick="eliminarRespuestas()"></input>
 
         	<input type="submit" name="submit" value="Enviar" onclick="validarRespuestas()"></input>
         	  

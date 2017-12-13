@@ -27,6 +27,10 @@
 		$destino   = $arrayInvitados[$x];
 		$titulo    = "INVITACION AL PROJECTEVOTA!";
 		$mensaje   = $rand_part;
+
+		echo $arrayInvitados[$x];
+		echo $rand_part;
+
 		mail($destino, $titulo, $mensaje);
 	}
 ?>

@@ -171,6 +171,30 @@ article{
     height: 150px;
 }
 
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+}
+
+.tooltip .tooltiptext {
+    visibility: visible;
+}
+
 /*  -------------------  PARTE RESPONSIVE  -------------------  */
 @media (max-width:768px){
     form{
