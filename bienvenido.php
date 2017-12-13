@@ -5,8 +5,6 @@
        header('Location: inicio.php');
        exit();
     }
-
-    phpinfo();
 ?>
 <!DOCTYPE html>
 <html>

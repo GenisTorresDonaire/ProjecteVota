@@ -1,5 +1,4 @@
 <?php
-
 	try {
 	    $hostname = "localhost";
 	    $dbname = "ProjecteVota";
@@ -17,15 +16,17 @@
 	for ($x = 0; $x < sizeof($arrayInvitados); $x++){
 		$rand_part = str_shuffle("abcdefghijklmnopqrstuvwxyz0123456789".uniqid());
 
-		// INSERTAR EN LA BBDD
-		$query = $pdo->prepare("insert into usuarios (`password`,`email`,`Admin`,`token`) values ('','".$arrayInvitados[$x]."',0,'".$rand_part."')");
-		$query->execute();
-					
-		// ENVIAR EMAIL			
+	// INSERTAR EN LA BBDD
+	$query = $pdo->prepare("insert into usuarios (password, email, Admin, token) values ('".$rand_part."','".$arrayInvitados[$x]."',0,'".$rand_part."');");
+	$query->execute();
+
+	echo $rand_part;
+	echo $arrayInvitados[$x];
+
+	// ENVIAR EMAIL
 		$destino   = $arrayInvitados[$x];
-		$titulo    = "Invitacion al Proyecto Vota!!!";
+		$titulo    = "INVITACION AL PROJECTEVOTA!";
 		$mensaje   = $rand_part;
 		mail($destino, $titulo, $mensaje);
 	}
-	
 ?>
