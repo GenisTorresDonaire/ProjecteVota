@@ -1,9 +1,6 @@
 <?php
-					
 	$destino   = "genistorres97@gmail.com";
-	$titulo    = "Invitacion al Proyecto Vota!!!";
-	$mensaje   = "wibefiwbiwbgwergiiwbgwigboerbgi23iti3g";
-	
+	$titulo    = "Proyecto Vota!!!";
+	$mensaje   = "Bienvenido a la plataforma.";
 	mail($destino, $titulo, $mensaje);
-	
 ?>
