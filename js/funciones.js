@@ -1,3 +1,19 @@
+// Fichero: funciones.js
+// Data de creacion: 4/12/2017
+// Creador: Alejandro Novoa Montolio y la funcion "desplegar()" lo ha echo Genis Torres Donaire
+/* Descripcion: En este fichero encontraremos todas las funciones de "crear consultas" y la funcion 
+				del desplegable de las consultas, es decir, aqui encontraremos esto:
+                
+                	- Creacion de la funcion desplegable de las consultas 
+                	- Creacion de todas la funciones de "crear consultas"
+                	- Creacion de la pregunta
+                	- Creacion de los botones 
+                	- Creacion de los labels
+                	- Creacion de los inputs
+                	- Creacion de las respuestas de la pagina
+                	- Creacion de las validaciones de cada campo 
+*/
+
 //VARIABLES
 contCreador = 0;
 arrayOpciones = 0;
