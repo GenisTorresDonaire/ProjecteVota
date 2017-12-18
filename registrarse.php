@@ -12,18 +12,19 @@
 	</head>
 	<body>
 		<div class="divLogoGrande">
-           <img id="logoGrande" src="imagenes/vota.png"/>
-       </div>
+           		<img id="logoGrande" src="imagenes/vota.png"/>
+       		</div>
 		<div class="formInicio">
-			<form>
-            	<h2>Has sido invitado!!</h2>
-            	<p>Nombre: <input type="text" name="nombre"></p>
-            	<p>Apellido: <input type="text" name="apellido"></p>
-            	<p>Correo: <input type="email" name="correo"></p>
-            	<p>Introduce la contraseña: <input type="password" name="password1"></p>
-            	<p>Vuelve a introducir la contraseña: <input type="password" name="password2"></p>
-            	<input type="Submit" value="Entrar">
-            </form>
-		</div>        
+			<form action="cambioDatosUsuario.php" method="post">
+            			<h2>Has sido invitado!!</h2>
+            			<p>Nombre: <input type="text" name="nombre"></p>
+            			<p>Apellido: <input type="text" name="apellido"></p>
+            			<p>Correo: <input type="email" name="correo"></p>
+				<p>Introduce la contraseña: <input type="password" name="passwordNueva"></p>
+            			<p>Vuelve a introducir la contraseña: <input type="password" name="passwordNuevaRepetida"></p>
+				<p><input type="hidden" name="token" value='<?php echo $_GET['token']; ?>' ></p>
+            			<input type="Submit" value="Entrar">
+            		</form>
+		</div>
 	</body>
 </html>
