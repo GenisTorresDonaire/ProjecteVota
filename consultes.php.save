@@ -4,6 +4,29 @@
        		header('Location: inicio.php');
        		exit();
     	}
+
+	if(isset($_POST['respuesta'])){
+    		try {
+		    $hostname = "localhost";
+		    $dbname = "ProjecteVota";
+		    $username = "root";
+		    $pw = "mysql1234";
+		    $pdo = new PDO ("mysql:host=$hostname;dbname=$dbname","$username","$pw");
+		} catch (PDOException $e) {
+		    echo "Failed to get DB handle: " . $e->getMessage() . "\n";
+		    exit;
+		}
+
+		$query = $pdo->prepare("select id_usuario from usuarios where nombre='".$_POST['loginNombre']."';");
+		$query->execute();
+		$row = $query->fetch();
+
+		while ($row){
+			$query = $pdo->prepare("insert into votos (id_opciones, id_usuario) values (".$_POST['respuesta'].",".$row['id_usuario'].");");
+			$query->execute();
+			$row = $query->fetch();
+		}
+    	}
 ?>
 
 <!DOCTYPE html>
@@ -31,7 +54,7 @@
 
             <div class="menuBotones">
 	            <ul>
-					<li><a href="bienvenido.php">Inicio</a></li>
+					<li><a href="bienvenido.php">Inicio</button></a></li>
 					<?php
 						if( $_SESSION['rol'] == 'Cliente' ){
 							echo "<li><a href='consultes.php'>Consultas</a></li>";
@@ -46,7 +69,8 @@
         </nav>
 
         <article>
-        	<h1>CONSULTAS PENDIENTES</h1>
+        	<h1>Consultas</h1>
+        	<br>
       	        <?php
 				try {
 				    $hostname = "localhost";
@@ -59,49 +83,41 @@
 				    exit;
 				}
 
-				$query = $pdo->prepare("SELECT id_usuario FROM usuarios WHERE nombre='".$_SESSION['nombre']."'");
-                                $query->execute();
-                                $row = $query->fetch();
+				$query = $pdo->prepare("SELECT id_usuario FROM usuarios WHERE nombre='".$_SESSION['nombre']."';");
+				$query = execute();
+				;
 
-				while($row){
-					$query1 = $pdo->prepare("select id_consulta, pregunta from consulta where id_consulta IN (select id_consulta from invitaciones where votado=0 and id_usuario=".$row['id_usuario'].");");
+				
+					$query1 = $pdo->prepare("SELECT c.id_consulta, c.pregunta FROM consulta c, invitaciones i WHERE c.id_consulta=i.id_consulta and i.id_usuario='".$query."';");
 					$query1->execute();
 					$row1 = $query1->fetch();
 
+					$contador = 0;
 					echo "<div class='consultas'>";
-						while ($row1) {
-							echo "<form action='votar.php' method='post'>";
-                                                               	echo $row1['pregunta'];
-								echo "<input type='hidden' name='id_consulta' value='".$row1['id_consulta']."'>";
-								echo "<input type='submit' value='Enviar'>";
-							echo "<br>";
-							echo "</form>";
-                                                       	$row1 = $query1->fetch();
-						}
-					echo "</div>";
+					while ($row1) {
+						$contador = $contador+1;
+						echo "<div id='".$contador."' onclick='desplegar(".$contador.")'>".$contador." - ".$row1['pregunta'];
 
-					echo "<div class='votados'>";
-						echo "<br>";
-						echo "<h1>CONSULTAS A LAS QUE HAS VOTADO</h1>";
+						$query2 = $pdo->prepare("select * from opciones where id_consulta='".$row1['id_consulta']."';");
+						$query2->execute();
+						$row2 = $query2->fetch();
 
-						$query3 = $pdo->prepare("SELECT id_usuario FROM usuarios WHERE nombre='".$_SESSION['nombre']."'");
- 			                        $query3->execute();
-		               		        $row3 = $query3->fetch();
-
-						while($row3){
-        						//$query1 = $pdo->prepare("SELECT c.pregunta FROM consulta c, votos v, usuarios u WHERE c.id_consulta=v.id_consulta and u.id_usuario='".$row['id_usuario']."';");
-                                        		$query1 = $pdo->prepare("select id_consulta, pregunta from consulta where id_consulta IN (select id_consulta from invitaciones where votado=1 and id_usuario=".$row3['id_usuario'].");");
-							$query1->execute();
-                                       			$row1 = $query1->fetch();
-
-							while($row1){
-								echo $row1['pregunta']."<br>";
-								$row1 = $query1->fetch();
+						echo "<div class='plegable'>";
+							echo "<form action='consultes.php' method='post'>";
+							while ($row2) {
+								echo "<input type='radio' name='respuesta' value='".$row2['id_opciones']."'> ".$row2['descripcionOpciones']."</input>";
+								echo "<br>";
+								$row2 = $query2->fetch();
 							}
-							$row3 = $query->fetch();
-						}
+							echo "<input type='submit' value='Vota'></input>";
+
+							echo "</form>";
+							echo "</div>";
+						echo "</div>";
+
+						$row1 = $query1->fetch();
+					}
 					echo "</div>";
-					$row = $query->fetch();
 				}
 				unset($pdo);
 				unset($query);
