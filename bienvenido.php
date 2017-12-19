@@ -31,12 +31,12 @@
 
             	<div class="menuBotones">
 	            <ul>
-					<li><a href="bienvenido.php">Inicio</button></a></li>
 					<?php
 						if( $_SESSION['rol'] == 'Cliente' ){
 							echo "<li><a href='consultes.php'>Consultas</a></li>";
 						}
 						else if( $_SESSION['rol'] == 'Administrador' ) {
+							echo "<li><a href='bienvenido.php'>Inicio</a></li>";
 							echo "<li><a href='crearconsultes.php'>Crear Consultas</a></li>";
 							echo "<li><a href='invitarConsulta.php'>Invitar a consultas</a></li>";
 						}

@@ -31,12 +31,12 @@
 
             <div class="menuBotones">
 	            <ul>
-					<li><a href="bienvenido.php">Inicio</a></li>
 					<?php
 						if( $_SESSION['rol'] == 'Cliente' ){
 							echo "<li><a href='consultes.php'>Consultas</a></li>";
 						}
 						else if( $_SESSION['rol'] == 'Administrador' ) {
+							echo "<li><a href='bienvenido.php'>Inicio</a></li>";
 							echo "<li><a href='crearconsultes.php'>Crear Consultas</a></li>";
 							echo "<li><a href='invitarConsulta.php'>Invitar a consultas</a></li>";
 						}
@@ -82,7 +82,7 @@
 
 					echo "<div class='votados'>";
 						echo "<br>";
-						echo "<h1>CONSULTAS A LAS QUE HAS VOTADO</h1>";
+						echo "<h1>CONSULTAS RESPONDIDAS</h1>";
 
 						$query3 = $pdo->prepare("SELECT id_usuario FROM usuarios WHERE nombre='".$_SESSION['nombre']."'");
  			                        $query3->execute();
@@ -98,9 +98,9 @@
 								echo "<form action='cambiovoto.php' method='post'>";
 									echo "<label>".$row1['pregunta']."</label>";
 									echo "<input type='hidden' name='id_consulta' value='".$row1['id_consulta']."'>";
-									echo "<input type='submit' value='Editar' />";
+									//echo "<input type='submit' value='Editar' />";
 								echo "</form>";
-								echo "<br>";
+								//echo "<br>";
 								$row1 = $query1->fetch();
 							}
 							$row3 = $query->fetch();

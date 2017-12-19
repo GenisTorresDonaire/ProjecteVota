@@ -351,7 +351,7 @@ function validarRespuestas(){
 	}
 
 	// Si hay 2 opciones o mas, o si las opciones no estan vacios podra enviar la consulta
-	if(contOpciones >= 2 && opciones_no_null == inputs.length){
+	if(contOpciones >= 2 && opciones_no_null == inputs.length && comprobarfechas()){
 		enviarRespuestas();
 
 	}
@@ -379,7 +379,7 @@ function validarFocus(event){
 }
 
 //FUNCION PARA VALIDAR FECHAS
-function comprobarfechas(diaEntrada,diaTancament){
+function comprobarfechas(){
 
 	// Indicamos variables
 	var hoy = new Date();
@@ -413,7 +413,11 @@ function comprobarfechas(diaEntrada,diaTancament){
 	fechaHora = fechaHora / 3600;
 
 	// Validacions
-	if(diaEntrada <= hoy){
+
+	if(diaEntrada > hoy && diaEntrada < diaTancament && fechaHora >= 4000){
+		return true; 
+	}
+	else if(diaEntrada <= hoy){
 		alert("La fecha de inicio no puede ser mas pequeña ni igual que la data actual!!");
 	}
 	else if(fechaHora < 0){
@@ -422,4 +426,7 @@ function comprobarfechas(diaEntrada,diaTancament){
 	else if(fechaHora < 4000 && fechaHora >= 0){
 		alert('El tiempo minimo tiene que ser de 4 horas');
 	}
+
+	return false;
 }
+
