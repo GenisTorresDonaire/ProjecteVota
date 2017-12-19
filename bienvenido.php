@@ -63,14 +63,14 @@
 			$query = $pdo->prepare("select distinct id_consulta from opciones");
                 	$query->execute();
                	 	$row = $query->fetch();
-			
+
                 	while ($row){
 				// DEVUELVE LAS PREGUNTAS DE ENCUESTA
 				//echo "SELECT DISTINCT pregunta from consulta where id_consulta=".$row['id_consulta']."";
 				$query1 = $pdo->prepare("SELECT DISTINCT pregunta from consulta where id_consulta=".$row['id_consulta']."");
         	                $query1->execute();
 	                        $row1 = $query1->fetch();
-				
+
 				while($row1){
 					// DEVUELVE CADA OPCION DE CADA ENCUESTA
 					//echo "select id_opciones, descripcionOpciones from opciones where id_consulta=".$row['id_consulta']."";
