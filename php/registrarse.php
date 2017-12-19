@@ -7,12 +7,12 @@
 	<head>
 		<title>ProjecteVota</title>
 		<meta charset="UTF-8">
-		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="../css/style.css">
 		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
 	</head>
 	<body>
 		<div class="divLogoGrande">
-           		<img id="logoGrande" src="imagenes/vota.png"/>
+           		<img id="logoGrande" src="../imagenes/vota.png"/>
        		</div>
 		<div class="formInicio">
 			<form action="cambioDatosUsuario.php" method="post">

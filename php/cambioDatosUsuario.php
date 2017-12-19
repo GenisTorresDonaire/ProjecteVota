@@ -29,9 +29,11 @@
 			if ($passwordNueva == $passwordNuevaRepetida){
                			$query = $pdo->prepare("UPDATE usuarios SET nombre='".$nombre."', apellido='".$apellido."', email='".$correo."', password=SHA2('".$passwordNueva."', 256),token='' WHERE token='".$token."' and email='".$correo."';");
                			$query->execute();
-
+				
                			header('Location: inicio.php');
         		}
 		}
+		$row = $query->fetch();
 	}
+
 ?>

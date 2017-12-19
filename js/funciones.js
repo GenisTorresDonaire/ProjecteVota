@@ -187,7 +187,7 @@ function crearRespuestas(){
     padre.insertBefore(form,padre);
 }
 
-//FUNCION PARA ELIMINAR TODAS LAS RESPUESTAS 
+//FUNCION PARA ELIMINAR UNA RESPUESTA 
 function eliminar(id){
 	// Creacio nueva variable
 	var nuevoNumero = 1;
@@ -220,7 +220,7 @@ function eliminar(id){
 	}
 }
 
-//FUNCION PARA ELIMINAR UNA RESPUESTA
+//FUNCION PARA ELIMINAR TODAS LAS RESPUESTAS
 function eliminarRespuestas(){
 
 	// Creacio nueva variable
@@ -237,7 +237,7 @@ function eliminarRespuestas(){
 	var borrarArriba = document.getElementsByClassName('arriba');
 	var borrarAbajo = document.getElementsByClassName('abajo');
 
-	// Eliminamos cada elemento de la respuesta que queremos eliminar
+	// Eliminamos todos los elementos
 	for(var num = 0; num <= contOpciones; num++){
 		borrarLabel[0].parentNode.removeChild(borrarLabel[0]);
 		borrarOpciones[0].parentNode.removeChild(borrarOpciones[0]);

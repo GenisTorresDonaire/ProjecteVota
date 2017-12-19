@@ -30,24 +30,20 @@
                 	$row2 = $query2->fetch();
 
 			while ($row2){
-				// SE INSERTA EL VOTO EN LA TABLA VOTOS
-				$rand_part = str_shuffle("abcdefghijklmnopqrstuvwxyz0123456789".uniqid());
-				$hash_e = AES_ENCRYPT('valor a encriptar como cadena', 'c');
-echo "insert into votos (id_usuario, id_consulta, hash_e) values (".$row['id_usuario'].",".$row2['id_consulta'].", AES_ENCRYPT('".$rand_part."','".$_SESSIONinsert into votos (id_usuario, id_consulta, hash_e) values (".$row['id_usuario'].",".$row2['id_consulta'].", AES_ENCRYPT('".$rand_part."','".$_SESSION['pas']."')['pas']."'))");
-				$query3 = $pdo->prepare("insert into votos (id_usuario, id_consulta, hash_e) values (".$row['id_usuario'].",".$row2['id_consulta'].",  AES_ENCRYPT('".$rand_part."','".$_SESSION['pas']."'));");
-				$query3->execute();
+				$query3 = $pdo->prepare("select hash_e from votos where id_consulta=".$row2['id_consulta']." and id_usuario=".$row['id_usuario']."");
+                                $query3->execute();
+				$row3 = $query3->fetch();
 
-				echo "insert into votos_opciones (hash, id_opciones) values ('".$rand_part."',".$_POST['respuesta'].")";
-				$query5 = $pdo->prepare("insert into votos_opciones (hash, id_opciones) values ('".$rand_part."',".$_POST['respuesta'].")");
-				$query5->execute();
-
-				$query4 = $pdo->prepare("update invitaciones SET votado=1 WHERE id_consulta=".$row2['id_consulta']." and id_usuario=".$row['id_usuario'].";");
-                                $query4->execute();
-	                        $row2 = $query2->fetch();
+				while($row3){
+					$query5 = $pdo->prepare("UPDATE votos_opciones SET id_opciones=".$_POST['respuesta']." WHERE hash='AES_DECRYPT('".$row3['hash_e']."','".$_SESSION['pas']."')'");
+					$query5->execute();
+					$row3 = $query3->fetch();
+				}
+				$row2 = $query2->fetch();
 			}
 			$row = $query->fetch();
 		}
-		//header('Location: consultes.php');
+		header('Location: consultes.php');
     	}
 ?>
 
@@ -57,13 +53,13 @@ echo "insert into votos (id_usuario, id_consulta, hash_e) values (".$row['id_usu
 		<title>ProjecteVota</title>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
-		<link rel="stylesheet" href="css/style.css">
-		<link rel="stylesheet" href="css/fontello.css">
-		<script type="text/javascript" src="js/funciones.js"></script>
+		<link rel="stylesheet" href="../css/style.css">
+		<link rel="stylesheet" href="../css/fontello.css">
+		<script type="text/javascript" src="../js/funciones.js"></script>
 	</head>
 	<body onload="setTimeout(desplegar, 2000);">
 		<header>
-            <img src="imagenes/banner.png"/>
+            <img src="../imagenes/banner.png"/>
         </header>
 
         <nav class="contenedorMenu">
@@ -76,12 +72,12 @@ echo "insert into votos (id_usuario, id_consulta, hash_e) values (".$row['id_usu
 
             <div class="menuBotones">
 	            <ul>
-					<li><a href="bienvenido.php">Inicio</a></li>
 					<?php
 						if( $_SESSION['rol'] == 'Cliente' ){
 							echo "<li><a href='consultes.php'>Consultas</a></li>";
 						}
 						else if( $_SESSION['rol'] == 'Administrador' ) {
+							echo "<li><a href='bienvenido.php'>Inicio</a></li>";
 							echo "<li><a href='crearconsultes.php'>Crear Consultas</a></li>";
 							echo "<li><a href='invitarConsulta.php'>Invitar a consultas</a></li>";
 						}
@@ -105,14 +101,46 @@ echo "insert into votos (id_usuario, id_consulta, hash_e) values (".$row['id_usu
 				    exit;
 				}
 
-				$id_consulta = $_POST['id_consulta'];
-
-				$query1 = $pdo->prepare("select * from consulta where id_consulta=".$_POST['id_consulta'].";");
-				$query1->execute();
-				$row1 = $query1->fetch();
-
-				$contador = 0;
 				echo "<div class='consultas'>";
+
+				// SELECCION DE ID POR CORREO DE DICHO USUARIO
+               			$query = $pdo->prepare("select id_usuario from usuarios where nombre='".$_SESSION['nombre']."';");
+                		$query->execute();
+        	        	$row = $query->fetch();
+
+		                while ($row){
+					// MOSTRAR EL ANTIGUO VOTOO
+					//echo "select hash_e from votos where id_consulta=".$_POST['id_consulta']." and id_usuario=".$row['id_usuario']."";
+					$query3 = $pdo->prepare("select hash_e from votos where id_consulta=".$_POST['id_consulta']." and id_usuario=".$row['id_usuario']."");
+                                	$query3->execute();
+                             	  	$row3 = $query3->fetch();
+
+                        	        while($row3){
+						//echo "select id_opciones from votos_opciones where hash='AES_DECRYPT('".$row3['hash_e']."','".$_SESSION['pas']."')";
+						//$query5 = $pdo->prepare("select id_opciones from votos_opciones where hash='AES_DECRYPT('".$row3['hash_e']."','".$_SESSION['pas']."')'");
+                  	                      	$query4 = $pdo->prepare("select hash from votos_opciones");
+						$query4->execute();
+						$row4 = $query4->fetch();
+
+						while($row4){
+							$query5 = $pdo->prepare("select");
+                                                	$query5->execute();
+
+							$row4 = $query4->fetch();
+						}
+                                       		$row3 = $query3->fetch();
+                                	}
+					$row = $query->fetch();
+				}
+				//echo "<label>ANTERIORMENTE VOTASTE: ".."</label>";
+
+
+				//$id_consulta = $_POST['id_consulta'];
+                                $query1 = $pdo->prepare("select * from consulta where id_consulta=".$_POST['id_consulta'].";");
+                                $query1->execute();
+                                $row1 = $query1->fetch();
+
+                                $contador = 0;
 				while ($row1) {
 					$contador = $contador+1;
 					echo "<div id='".$contador."'>".$contador." - ".$row1['pregunta'];

@@ -42,7 +42,7 @@
 			// ENVIAR EMAIL
 			$destino   = $arrayInvitados[$x];
 			$titulo    = "INVITACION AL PROJECTEVOTA!";
-			$mensaje   = "genis.tk/ProjecteVota/registrarse.php?token=".$rand_part;
+			$mensaje   = "genis.tk/ProjecteVota/php/registrarse.php?token=".$rand_part;
 			mail($destino, $titulo, $mensaje);
 		}
 		else{
@@ -66,7 +66,7 @@
 			// ENVIAR EMAIL
                         $destino   = $arrayInvitados[$x];
                         $titulo    = "TE HAN INVITADO A UNA NUEVA CONSULTA!!";
-                        $mensaje   = "Loggeate y vota!! genis.tk/ProjecteVota/inicio.php";
+                        $mensaje   = "Loggeate y vota!! genis.tk/ProjecteVota/php/inicio.php";
                         mail($destino, $titulo, $mensaje);
 		}
 	}
