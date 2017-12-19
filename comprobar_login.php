@@ -3,7 +3,7 @@
 
 	try {
 	    $hostname = "localhost";
-	    $dbname = "ProjecteVota";
+	    $dbname = "ProjecteVotaCopia";
 	    $username = "root";
 	    $pw = "mysql1234";
 	    $pdo = new PDO ("mysql:host=$hostname;dbname=$dbname","$username","$pw");
@@ -13,6 +13,7 @@
 	}
 
 	$query = $pdo->prepare("select * from usuarios where nombre=:nombre and password=SHA2(:password, 256);");
+	//$_SESSION['pas'] = SHA2( $_POST['loginPassword'], 256);
 	$query->bindParam(":nombre", $_POST['loginNombre']);
 	$query->bindParam(":password", $_POST['loginPassword']);
 	$query->execute();
@@ -21,7 +22,7 @@
 		$_SESSION['estado'] = "Autenticado";
 		$_SESSION['nombre'] = $_POST['loginNombre'];
 		$_SESSION['esadmin'] = $row['Admin'];
-
+		$_SESSION['pas'] = $_POST['loginPassword'];
 		if( $_SESSION['esadmin'] == '0' ){
 			$_SESSION['rol'] = 'Cliente';
 			header('Location: consultes.php');

@@ -32,11 +32,12 @@
 			while ($row2){
 				// SE INSERTA EL VOTO EN LA TABLA VOTOS
 				$rand_part = str_shuffle("abcdefghijklmnopqrstuvwxyz0123456789".uniqid());
-				//echo "insert into votos (id_usuario, id_consulta, hash_e) values (".$row['id_usuario'].",".$row2['id_consulta'].", AES_ENCRYPT('".$rand_part."','".$_SESSION['pas']."'))");
-				$query3 = $pdo->prepare("insert into votos (id_usuario, id_consulta, hash_e) values (".$row['id_usuario'].",".$row2['id_consulta'].",AES_ENCRYPT('".$rand_part."','".$_SESSION['pas']."'));");
+				$hash_e = AES_ENCRYPT('valor a encriptar como cadena', 'c');
+echo "insert into votos (id_usuario, id_consulta, hash_e) values (".$row['id_usuario'].",".$row2['id_consulta'].", AES_ENCRYPT('".$rand_part."','".$_SESSIONinsert into votos (id_usuario, id_consulta, hash_e) values (".$row['id_usuario'].",".$row2['id_consulta'].", AES_ENCRYPT('".$rand_part."','".$_SESSION['pas']."')['pas']."'))");
+				$query3 = $pdo->prepare("insert into votos (id_usuario, id_consulta, hash_e) values (".$row['id_usuario'].",".$row2['id_consulta'].",  AES_ENCRYPT('".$rand_part."','".$_SESSION['pas']."'));");
 				$query3->execute();
 
-				//echo "insert into votos_opciones (hash, id_opciones) values ('".$rand_part."',".$_POST['respuesta'].")";
+				echo "insert into votos_opciones (hash, id_opciones) values ('".$rand_part."',".$_POST['respuesta'].")";
 				$query5 = $pdo->prepare("insert into votos_opciones (hash, id_opciones) values ('".$rand_part."',".$_POST['respuesta'].")");
 				$query5->execute();
 
@@ -46,7 +47,7 @@
 			}
 			$row = $query->fetch();
 		}
-		header('Location: consultes.php');
+		//header('Location: consultes.php');
     	}
 ?>
 

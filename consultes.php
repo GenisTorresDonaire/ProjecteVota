@@ -50,7 +50,7 @@
       	        <?php
 				try {
 				    $hostname = "localhost";
-				    $dbname = "ProjecteVota";
+				    $dbname = "ProjecteVotaCopia";
 				    $username = "root";
 				    $pw = "mysql1234";
 				    $pdo = new PDO ("mysql:host=$hostname;dbname=$dbname","$username","$pw");
@@ -95,7 +95,12 @@
                                        			$row1 = $query1->fetch();
 
 							while($row1){
-								echo $row1['pregunta']."<br>";
+								echo "<form action='cambiovoto.php' method='post'>";
+									echo "<label>".$row1['pregunta']."</label>";
+									echo "<input type='hidden' name='id_consulta' value='".$row1['id_consulta']."'>";
+									echo "<input type='submit' value='Editar' />";
+								echo "</form>";
+								echo "<br>";
 								$row1 = $query1->fetch();
 							}
 							$row3 = $query->fetch();
