@@ -93,7 +93,8 @@
         	<input type="submit" name="submit" value="Enviar" onclick="validarRespuestas()"></input>
         	  
         </article>
-
-
+        <footer>
+        	<h5>© Copyright 2007-2018 - Created by Genis and Alejandro</h5>
+        </footer>
 	</body>
 </html>

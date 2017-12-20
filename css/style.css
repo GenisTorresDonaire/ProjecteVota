@@ -19,7 +19,7 @@ body {
     display: flex;
     min-height: 100vh;
     display: block;
-    background-image: url('http://www.wearewebstars.dk/codepen/img/s1.png'), url('http://www.wearewebstars.dk/codepen/img//s3.png');
+    background-image: url('../imagenes/coposfondo.png'), url('../imagenes/coposfondo2.png');
     animation: snow 10s linear infinite;
 }
 
@@ -40,6 +40,14 @@ header{
     margin-bottom: 2px;
 }
 
+footer{
+    border: 3px solid black;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    background: #79767e;
+    color:white;
+    text-align: center;
+}
 
 /*  -------------------  MAQUETACION LOGIN  -------------------  */
 .formInicio form {
@@ -129,12 +137,11 @@ header{
 article{
     background: #E6E1DF;
     width: 100%;
-    min-height: 500px;
+    min-height: 480px;
     height: auto;
     padding: 10px;
-    border-bottom-right-radius: 10px;
-    border-bottom-left-radius: 10px;
     border: 3px solid black;
+    margin-bottom: 2px;
 }
 
 .plegable{
